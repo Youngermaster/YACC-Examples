@@ -84,10 +84,9 @@
 #include <stdio.h>
 #define YYSTYPE double /* double type for Yacc stack */
 
-/* Tell compiler about yylex() and yyerror() before using them */
+/* Function declarations */
 int yylex(void);
 int yyerror(const char *s);
-
 
 
 /* Enabling traces.  */
@@ -121,7 +120,7 @@ typedef int YYSTYPE;
 
 
 /* Line 216 of yacc.c.  */
-#line 125 "calc.tab.c"
+#line 124 "calc.tab.c"
 
 #ifdef short
 # undef short
@@ -406,8 +405,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    24,    24,    25,    26,    29,    30,    31,    32,    33,
-      34,    35
+       0,    22,    22,    23,    24,    27,    28,    29,    30,    31,
+      32,    33
 };
 #endif
 
@@ -1316,43 +1315,43 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 24 "calc.y"
+#line 22 "calc.y"
     { printf("%g\n", (yyvsp[(2) - (3)])); ;}
     break;
 
   case 5:
-#line 29 "calc.y"
+#line 27 "calc.y"
     { (yyval) = (yyvsp[(1) - (3)]) + (yyvsp[(3) - (3)]); ;}
     break;
 
   case 6:
-#line 30 "calc.y"
+#line 28 "calc.y"
     { (yyval) = (yyvsp[(1) - (3)]) - (yyvsp[(3) - (3)]); ;}
     break;
 
   case 7:
-#line 31 "calc.y"
+#line 29 "calc.y"
     { (yyval) = (yyvsp[(1) - (3)]) * (yyvsp[(3) - (3)]); ;}
     break;
 
   case 8:
-#line 32 "calc.y"
+#line 30 "calc.y"
     { (yyval) = (yyvsp[(1) - (3)]) / (yyvsp[(3) - (3)]); ;}
     break;
 
   case 9:
-#line 33 "calc.y"
+#line 31 "calc.y"
     { (yyval) = (yyvsp[(2) - (3)]); ;}
     break;
 
   case 10:
-#line 34 "calc.y"
-    { (yyval) = - (yyvsp[(2) - (2)]); ;}
+#line 32 "calc.y"
+    { (yyval) = -(yyvsp[(2) - (2)]); ;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1356 "calc.tab.c"
+#line 1355 "calc.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1566,24 +1565,30 @@ yyreturn:
 }
 
 
-#line 37 "calc.y"
+#line 36 "calc.y"
 
+
+/* Lexical analyzer */
 int yylex(void) {
-int c;
-while ( ( c = getchar() ) == ' ' );
-if ( (c == '.') || (isdigit(c)) ) {
-ungetc(c, stdin);
-scanf("%lf", &yylval);
-return NUMBER;
-}
-return c;
+    int c;
+    
+    while ((c = getchar()) == ' ');
+    
+    if ((c == '.') || (isdigit(c))) {
+        ungetc(c, stdin);
+        scanf("%lf", &yylval);
+        return NUMBER;
+    }
+    return c;
 }
 
+/* Error handler */
 int yyerror(const char *s) {
     fprintf(stderr, "Error: %s\n", s);
     return 0;
 }
 
+/* Main function */
 int main(void) {
     return yyparse();
 }
