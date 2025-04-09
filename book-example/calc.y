@@ -13,12 +13,10 @@ int yyerror(const char *s);
 %left '*' '/'
 %right UMINUS
 %%
-input : /* empty */
-| input line
-;
 
-line : expr '\n' { printf("%g\n", $1); }
-| '\n'
+lines : lines expr '\n' { printf("%g\n", $2); }
+| lines '\n'
+| /* empty */
 ;
 
 expr : expr '+' expr { $$ = $1 + $3; }
