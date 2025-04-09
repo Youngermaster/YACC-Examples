@@ -13,10 +13,14 @@ int yyerror(const char *s);
 %left '*' '/'
 %right UMINUS
 %%
-lines : lines expr '\n' { printf("%g\n", $2); }
-| lines '\n'
-| /* empty */
+input : /* empty */
+| input line
 ;
+
+line : expr '\n' { printf("%g\n", $1); }
+| '\n'
+;
+
 expr : expr '+' expr { $$ = $1 + $3; }
 | expr '-' expr { $$ = $1 - $3; }
 | expr '*' expr { $$ = $1 * $3; }
@@ -35,4 +39,13 @@ scanf("%lf", &yylval);
 return NUMBER;
 }
 return c;
+}
+
+int yyerror(const char *s) {
+    fprintf(stderr, "Error: %s\n", s);
+    return 0;
+}
+
+int main(void) {
+    return yyparse();
 }
